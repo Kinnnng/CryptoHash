@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import hashlib
 import random
+from tkinter import filedialog
 
 def xor_encrypt(text, key):
     """
@@ -64,8 +65,13 @@ decrypt_btn.pack()
 generation_btn = ttk.Button(header_frame, text="Генерировать")
 generation_btn.pack()
 
+encryptfile_btn = ttk.Button(header_frame, text="Encrypt File")
+encryptfile_btn.pack()
+
+
 ctf_btn = ttk.Button(header_frame, text="CTF task ")
 ctf_btn.pack()
+
 
 def hash_key(key):
     return hashlib.sha256(key.encode()).hexdigest()
@@ -197,8 +203,29 @@ def open_generation_password():
         hex_entry.insert(0, result)
 
     btn = ttk.Button(generation, text="Generate", command=generation_password)
-    btn.pack()    
-
+    btn.pack() 
+    
+    
+def open_file():
+    file = tk.Toplevel(window)
+    file.title("encrypt file")
+    file.geometry("600x500")   
+    
+    
+    file_r = tk.Entry(file, width=50)
+    file_r.pack()
+    
+    def browser_file():
+        filepath = filedialog.askopenfilename()
+        print(filepath)
+        
+        file_r.delete(0, tk.END)
+        file_r.insert(0, filepath)
+    
+    btn = ttk.Button(file, text="Выбрать файл", command=browser_file)
+    btn.pack()
+    
+    
 
 
 def CTF_task():
@@ -345,10 +372,12 @@ def CTF_task():
     task1_btn.config(command=task1_ez)
     
     
+    
 
 encrypt_btn.config(command=open_encrypt_window)
 decrypt_btn.config(command=open_decrypt_window)
 generation_btn.config(command=open_generation_password)
+encryptfile_btn.config(command=open_file)
 ctf_btn.config(command=CTF_task)
 # Здесь создаем два фрейма для разного содержимого
 # encrypt_content = ttk.Frame(content_frame)
