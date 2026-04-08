@@ -291,8 +291,47 @@ def CTF_task():
         
     def task3_hard():
         task3 = tk.Toplevel(ctf)
-        task3.title("Task2")
+        task3.title("Task3")
         task3.geometry("600x500")
+
+        secret_text = "hack"
+        real_key = "lion"
+        encoded_key = "noil"
+
+        hex_text = xor_encrypt(secret_text, hash_key(real_key))
+
+        label = tk.Label(task3, text="Reverse key")
+        label.pack(pady=10)
+
+        label = tk.Label(task3, text="Подсказка: ключ записан наоборот")
+        label.pack(pady=5)
+
+        label = tk.Label(task3, text=f"Зашифрованный ключ: {encoded_key}")
+        label.pack(pady=5)
+
+        label = tk.Label(task3, text=f"HEX строка: {hex_text}")
+        label.pack(pady=5)
+
+        label = tk.Label(task3, text="Введи расшифрованный текст:")
+        label.pack(pady=5)
+
+        answer = tk.Entry(task3, width=50)
+        answer.pack(pady=5)
+
+        result_label = tk.Label(task3, text="")
+        result_label.pack(pady=10)
+
+        def check_task3():
+            user_answer = answer.get()
+
+            if user_answer == secret_text:
+                result_label.config(text="Верно! Ты решил задачу.")
+            else:
+                result_label.config(text="Неверно. Попробуй ещё раз.")
+
+        btn = tk.Button(task3, text="Проверить", command=check_task3)
+        btn.pack(pady=10)
+        
         
     task1_btn = ttk.Button(ctf, text="TASK1", command=task1_ez)
     task1_btn.pack(pady=10)
