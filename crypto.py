@@ -304,6 +304,15 @@ def CTF_task():
     task3_btn.pack(pady=10)      
 
     task1_btn.config(command=task1_ez)
+     task1_btn.config(command=task1_ez) task1_btn.config(command=task1_ez) task1_btn.config(command=task1_ez)м
+      task1_btn.config(command=task1_ez)
+       task1_btn.config(command=task1_ez)
+        task1_btn.config(command=task1_ez)
+         task1_btn.config(command=task1_ez)
+          task1_btn.config(command=task1_ez)
+           task1_btn.config(command=task1_ez)
+            task1_btn.config(command=task1_ez)
+            
     
 
 encrypt_btn.config(command=open_encrypt_window)
