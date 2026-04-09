@@ -284,18 +284,28 @@ def open_file():
 def decrypt_file():
     file = tk.Toplevel(window)
     file.title("decrypt file")
-    file.geometry("600x500")  
+    file.geometry("600x500") 
+    
+    def lala_file():
+        filepath = filedialog.askopenfilename()
+        print(filepath)
+        
+        file_r.delete(0, tk.END)
+        file_r.insert(0, filepath)
+    
+    
+    file_r = tk.Entry(file, width=50)
+    file_r.pack()
+     
     
     hex_entry = ttk.Entry(file, width=50)
     hex_entry.pack()
     
-    label = tk.Label(file, text="Выбрать файл")
+    label = tk.Button(file, text="Выбрать файл")
     label.pack()
     
     encrypt = ttk.Button(file, text="Расшифровать файл", command=decrypt_file)
-    encrypt.pack()
-    
-    
+    encrypt.pack()  
     
     
 def CTF_task():
