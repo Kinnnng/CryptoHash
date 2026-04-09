@@ -238,6 +238,19 @@ def open_file():
             data = f.read()
             print(type(data))
             print(len(data))
+            
+    def hash_key_bytes(key_text):
+        return hashlib.sha256(key_text.encode()).digest()
+    
+    def xor_file_bytes(data, key_bytes):
+        result = bytearray()
+
+        for i, byte in enumerate(data):
+            key_byte = key_bytes[i % len(key_bytes)]
+            encrypted_byte = byte ^ key_byte
+            result.append(encrypted_byte)
+
+        return result
     
     btn = ttk.Button(file, text="Выбрать файл", command=browser_file)
     btn.pack()
