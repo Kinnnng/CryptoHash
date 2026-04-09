@@ -225,7 +225,7 @@ def open_file():
     def encrypt_file():
         filepath = file_r.get()  
         key_text = key.get()
-    
+        
         if not filepath:
             print("Выберите файл")
             return
@@ -236,9 +236,17 @@ def open_file():
         
         with open(filepath, "rb") as f:
             data = f.read()
-            print(type(data))
-            print(len(data))
-            
+                  
+        key_bytes = hash_key_bytes(key_text)
+        encrypted_data = xor_file_bytes(data, key_bytes)
+        
+        new_filepath = filepath + ".enc"
+
+        with open(new_filepath, "wb") as f:
+            f.write(encrypted_data)
+
+            print("Файл сохранён:", new_filepath)
+        
     def hash_key_bytes(key_text):
         return hashlib.sha256(key_text.encode()).digest()
     
