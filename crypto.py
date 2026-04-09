@@ -223,7 +223,21 @@ def open_file():
         file_r.insert(0, filepath)
         
     def encrypt_file():
-        pass    
+        filepath = file_r.get()  
+        key_text = key.get()
+    
+        if not filepath:
+            print("Выберите файл")
+            return
+
+        if not key_text:
+            print("Введите ключ")
+            return
+        
+        with open(filepath, "rb") as f:
+            data = f.read()
+            print(type(data))
+            print(len(data))
     
     btn = ttk.Button(file, text="Выбрать файл", command=browser_file)
     btn.pack()
@@ -240,8 +254,8 @@ def open_file():
     label = tk.Label(file, text="HEX вид")
     label.pack()
     
-    hex = ttk.Entry(file, width=50)
-    hex.pack()
+    hex_entry = ttk.Entry(file, width=50)
+    hex_entry.pack()
     
     
     
