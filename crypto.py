@@ -68,6 +68,9 @@ generation_btn.pack()
 encryptfile_btn = ttk.Button(header_frame, text="Encrypt File")
 encryptfile_btn.pack()
 
+decryptfile_btn = ttk.Button(header_frame, text="Decrypt File")
+decryptfile_btn.pack()
+
 
 ctf_btn = ttk.Button(header_frame, text="CTF task ")
 ctf_btn.pack()
@@ -278,6 +281,21 @@ def open_file():
     hex_entry = ttk.Entry(file, width=50)
     hex_entry.pack()
     
+def decrypt_file():
+    file = tk.Toplevel(window)
+    file.title("decrypt file")
+    file.geometry("600x500")  
+    
+    hex_entry = ttk.Entry(file, width=50)
+    hex_entry.pack()
+    
+    label = tk.Label(file, text="Выбрать файл")
+    label.pack()
+    
+    encrypt = ttk.Button(file, text="Расшифровать файл", command=decrypt_file)
+    encrypt.pack()
+    
+    
     
     
 def CTF_task():
@@ -399,6 +417,7 @@ def CTF_task():
 
         result_label = tk.Label(task3, text="")
         result_label.pack(pady=10)
+    
 
         def check_task3():
             user_answer = answer.get()
@@ -427,9 +446,15 @@ def CTF_task():
     
 
 encrypt_btn.config(command=open_encrypt_window)
+
 decrypt_btn.config(command=open_decrypt_window)
+
 generation_btn.config(command=open_generation_password)
+
 encryptfile_btn.config(command=open_file)
+
+decryptfile_btn.config(command=decrypt_file)
+
 ctf_btn.config(command=CTF_task)
 # Здесь создаем два фрейма для разного содержимого
 # encrypt_content = ttk.Frame(content_frame)
