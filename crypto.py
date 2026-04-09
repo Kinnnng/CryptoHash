@@ -221,13 +221,30 @@ def open_file():
         
         file_r.delete(0, tk.END)
         file_r.insert(0, filepath)
+        
+    def encrypt_file():
+        pass    
     
     btn = ttk.Button(file, text="Выбрать файл", command=browser_file)
     btn.pack()
     
+    label = tk.Label(file, text="Key")
+    label.pack()
     
-
-
+    key = ttk.Entry(file, width=10)
+    key.pack()
+    
+    encrypt = ttk.Button(file, text="Шифровать файл", command=encrypt_file)
+    encrypt.pack()
+    
+    label = tk.Label(file, text="HEX вид")
+    label.pack()
+    
+    hex = ttk.Entry(file, width=50)
+    hex.pack()
+    
+    
+    
 def CTF_task():
     ctf = tk.Toplevel(window)
     ctf.title("CTF task")
