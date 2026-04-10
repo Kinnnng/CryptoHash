@@ -275,36 +275,80 @@ def open_file():
     encrypt = ttk.Button(file, text="Шифровать файл", command=encrypt_file)
     encrypt.pack()
     
-    label = tk.Label(file, text="HEX вид")
-    label.pack()
-    
-    hex_entry = ttk.Entry(file, width=50)
-    hex_entry.pack()
-    
 def decrypt_file():
     file = tk.Toplevel(window)
     file.title("decrypt file")
     file.geometry("600x500") 
     
-    def lala_file():
+    file_d = tk.Entry(file, width=50)
+    file_d.pack()
+    
+    label = tk.Label(file, text="Key")
+    label.pack()
+    
+    key = ttk.Entry(file, width=10)
+    key.pack()
+    
+    
+    def open_file():
         filepath = filedialog.askopenfilename()
         print(filepath)
         
-        file_r.delete(0, tk.END)
-        file_r.insert(0, filepath)
-    
-    
-    file_r = tk.Entry(file, width=50)
-    file_r.pack()
+        file_d.delete(0, tk.END)
+        file_d.insert(0, filepath)
+        
+    def hash_key_bytes(key_text):
+        return hashlib.sha256(key_text.encode()).digest()
+
+
+    def xor_file_bytes(data, key_bytes):
+        result = bytearray()
+
+        for i, byte in enumerate(data):
+            key_byte = key_bytes[i % len(key_bytes)]
+            decrypted_byte = byte ^ key_byte
+            result.append(decrypted_byte)
+
+        return result
+
+    def decrypt_file_action():
+        filepath = file_d.get()
+        key_text = key.get()
+        
+        print("filepath:", filepath)
+        print("key_text:", key_text)
+
+        if not filepath:
+            print("Выберите файл")
+            return
+
+        if not key_text:
+            print("Введите ключ")
+            return
+
+        with open(filepath, "rb") as f:
+            data = f.read()
+            print("Размер входного файла:", len(data))
+
+        key_bytes = hash_key_bytes(key_text)
+        decrypted_data = xor_file_bytes(data, key_bytes)
+        print("Размер расшифрованных данных:", len(decrypted_data))
+
+        new_filepath = filepath + ".decoded"
+        print("new_filepath:", new_filepath)
+
+        with open(new_filepath, "wb") as f:
+            f.write(decrypted_data)
+            
+        print("Файл точно записан")
+
+        print("Файл расшифрован:", new_filepath)
+            
      
-    
-    hex_entry = ttk.Entry(file, width=50)
-    hex_entry.pack()
-    
-    label = tk.Button(file, text="Выбрать файл")
+    label = tk.Button(file, text="Выбрать файл", command=open_file)
     label.pack()
     
-    encrypt = ttk.Button(file, text="Расшифровать файл", command=decrypt_file)
+    encrypt = ttk.Button(file, text="Расшифровать файл", command=decrypt_file_action)
     encrypt.pack()  
     
     
@@ -439,8 +483,7 @@ def CTF_task():
 
         btn = tk.Button(task3, text="Проверить", command=check_task3)
         btn.pack(pady=10)
-        
-        
+            
     task1_btn = ttk.Button(ctf, text="TASK1", command=task1_ez)
     task1_btn.pack(pady=10)
 
@@ -450,10 +493,7 @@ def CTF_task():
     task3_btn = ttk.Button(ctf, text="TASK3", command=task3_hard)
     task3_btn.pack(pady=10)      
 
-    task1_btn.config(command=task1_ez)
-    
-    
-    
+    task1_btn.config(command=task1_ez) 
 
 encrypt_btn.config(command=open_encrypt_window)
 
@@ -466,24 +506,5 @@ encryptfile_btn.config(command=open_file)
 decryptfile_btn.config(command=decrypt_file)
 
 ctf_btn.config(command=CTF_task)
-# Здесь создаем два фрейма для разного содержимого
-# encrypt_content = ttk.Frame(content_frame)
-# decrypt_content = ttk.Frame(content_frame)
-
-# # Функции переключения
-# def show_encrypt():
-#     decrypt_content.pack_forget()
-#     encrypt_content.pack(fill='both', expand=True)
-
-# def show_decrypt():
-#     encrypt_content.pack_forget()
-#     decrypt_content.pack(fill='both', expand=True)
-
-# # Привязываем кнопки к функциям
-# encrypt_btn.config(command=show_encrypt)
-# decrypt_btn.config(command=show_decrypt)
-
-# # Показываем по умолчанию шифрование
-# show_encrypt()
 
 window.mainloop()
